@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { games, getGame } from "@/lib/games";
 import { getProfile } from "@/lib/supabase/server";
+import { authEnabled } from "@/lib/supabase/env";
 import GameFrame from "./GameFrame";
 import Leaderboard from "./Leaderboard";
 
@@ -22,11 +23,12 @@ export default async function GamePage({ params }: PageProps<"/games/[slug]">) {
   const profile = await getProfile();
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
+    <div className={`grid gap-6 ${authEnabled ? "lg:grid-cols-[1fr_300px]" : ""}`}>
       <section>
         <h1 className="mb-3 text-2xl font-bold">{game.title}</h1>
         <GameFrame
           game={game}
+          authEnabled={authEnabled}
           user={profile ? { id: profile.id, displayName: profile.display_name } : null}
         />
         <p className="mt-4 text-sm text-muted">{game.description}</p>
@@ -52,9 +54,11 @@ export default async function GamePage({ params }: PageProps<"/games/[slug]">) {
           </p>
         )}
       </section>
-      <aside>
-        <Leaderboard game={game} userId={profile?.id ?? null} />
-      </aside>
+      {authEnabled && (
+        <aside>
+          <Leaderboard game={game} userId={profile?.id ?? null} />
+        </aside>
+      )}
     </div>
   );
 }

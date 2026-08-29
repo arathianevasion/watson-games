@@ -1,10 +1,12 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { authEnabled } from "@/lib/supabase/env";
 import { getUser } from "@/lib/supabase/server";
 import LoginForm from "./LoginForm";
 
 export const metadata = { title: "Sign in" };
 
 export default async function LoginPage({ searchParams }: PageProps<"/login">) {
+  if (!authEnabled) notFound();
   const { next, error } = await searchParams;
   if (await getUser()) redirect(typeof next === "string" ? next : "/");
   return (

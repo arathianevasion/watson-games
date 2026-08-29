@@ -10,9 +10,11 @@ import { createClient } from "@/lib/supabase/client";
 interface Props {
   game: Game;
   user: { id: string; displayName: string } | null;
+  /** When false the portal never talks to Supabase; scores are acked as rejected. */
+  authEnabled: boolean;
 }
 
-export default function GameFrame({ game, user }: Props) {
+export default function GameFrame({ game, user, authEnabled }: Props) {
   const router = useRouter();
   const wrapRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -53,6 +55,10 @@ export default function GameFrame({ game, user }: Props) {
       }
       if (msg.type !== "score" || !msg.final) return;
 
+      if (!authEnabled) {
+        post(portalMessage("score:ack", { ok: false, reason: "accounts not enabled" }));
+        return;
+      }
       if (!game.leaderboard.enabled) {
         post(portalMessage("score:ack", { ok: false, reason: "leaderboard disabled" }));
         return;
@@ -83,7 +89,7 @@ export default function GameFrame({ game, user }: Props) {
     };
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
-  }, [game, user, post, router]);
+  }, [game, user, authEnabled, post, router]);
 
   const toggleFullscreen = () => {
     if (document.fullscreenElement) {

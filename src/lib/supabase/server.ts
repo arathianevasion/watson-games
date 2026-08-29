@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import type { Database } from "@/types/database";
-import { supabaseEnv } from "./env";
+import { authEnabled, supabaseEnv } from "./env";
 
 /** Server-side client bound to the request cookies (Server Components, Route Handlers, Server Actions). */
 export async function createClient() {
@@ -22,6 +22,7 @@ export async function createClient() {
 }
 
 export async function getUser() {
+  if (!authEnabled) return null;
   const supabase = await createClient();
   const {
     data: { user },
@@ -30,6 +31,7 @@ export async function getUser() {
 }
 
 export async function getProfile() {
+  if (!authEnabled) return null;
   const supabase = await createClient();
   const {
     data: { user },

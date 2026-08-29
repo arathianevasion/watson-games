@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import { getProfile } from "@/lib/supabase/server";
+import { authEnabled } from "@/lib/supabase/env";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -22,6 +23,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             <Link href="/" className="text-lg font-extrabold tracking-wide">
               <span className="text-accent">Watson</span> Games
             </Link>
+            {authEnabled && (
             <nav className="flex items-center gap-4 text-sm">
               {profile ? (
                 <>
@@ -38,6 +40,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                 </Link>
               )}
             </nav>
+            )}
           </div>
         </header>
         <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">{children}</main>

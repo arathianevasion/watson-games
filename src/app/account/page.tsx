@@ -1,4 +1,5 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { authEnabled } from "@/lib/supabase/env";
 import { revalidatePath } from "next/cache";
 import { createClient, getProfile } from "@/lib/supabase/server";
 
@@ -6,6 +7,7 @@ export const metadata = { title: "Account" };
 
 async function updateDisplayName(formData: FormData) {
   "use server";
+  if (!authEnabled) redirect("/");
   const name = String(formData.get("display_name") ?? "").trim();
   if (name.length < 2 || name.length > 24) redirect("/account?error=length");
   const supabase = await createClient();
@@ -20,6 +22,7 @@ async function updateDisplayName(formData: FormData) {
 }
 
 export default async function AccountPage({ searchParams }: PageProps<"/account">) {
+  if (!authEnabled) notFound();
   const profile = await getProfile();
   if (!profile) redirect("/login?next=/account");
   const { error, saved } = await searchParams;

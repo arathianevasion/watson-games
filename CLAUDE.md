@@ -2,6 +2,7 @@
 
 See README.md for setup. Non-obvious things:
 
+- Accounts/leaderboards are feature-flagged by `authEnabled` in `src/lib/supabase/env.ts` (true only when both NEXT_PUBLIC_SUPABASE_* vars exist). Currently deployed WITHOUT them. Never call `supabaseEnv()`/`createClient()` without checking the flag.
 - Next.js 16: middleware is `src/proxy.ts` (`export function proxy`); `params`/`searchParams` are Promises; use the generated `PageProps<"/route">` / `LayoutProps` types (run `pnpm exec next typegen` if they're missing).
 - Game bundles go in `public/game-files/<slug>/`, NOT `public/games/` — a static dir at `/games/<slug>/` shadows the Next `/games/[slug]` route on Cloudflare.
 - `public/_headers`: one `*` splat per rule; use `:name` placeholders. Never set `Content-Encoding` for `.unityweb` (Unity 5 loader decompresses in JS).

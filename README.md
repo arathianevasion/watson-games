@@ -16,9 +16,11 @@ pnpm preview                      # build + run on workerd, http://localhost:878
 pnpm lint && pnpm typecheck
 ```
 
-`pnpm dev` also works without a real Supabase project (auth just fails closed), so game pages can be developed offline.
+## Running without accounts (current default)
 
-## Supabase setup (one time)
+Accounts and leaderboards are gated on `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` (see `src/lib/supabase/env.ts`). With neither set — the default — the site is a plain game portal: no sign-in link, no leaderboard panel, `/login` and `/account` are 404, and nothing ever contacts Supabase. Deploy with **no** build variables to run this way for free.
+
+## Supabase setup (later, when enabling accounts)
 
 1. Create a new Supabase project. Copy the URL and anon key into `.env.local` and into the Cloudflare build variables.
 2. `pnpm exec supabase login`, then `pnpm exec supabase link --project-ref <ref>`.
@@ -34,7 +36,7 @@ Connect the repo in the Cloudflare dashboard (Workers & Pages → Create → Wor
 
 - Build command: `pnpm run build:cf`
 - Deploy command: `pnpm exec wrangler deploy`
-- Build variables: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SITE_URL`
+- Build variables: none for the no-accounts mode. When enabling accounts: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SITE_URL`
 
 Or deploy from your machine with `pnpm exec wrangler login && pnpm deploy`.
 
