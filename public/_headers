@@ -1,0 +1,16 @@
+# Unity 5.x .unityweb files are gzip-compressed by Unity and decompressed in JS
+# by unityloader41.js. They MUST be served as raw bytes with no Content-Encoding.
+# (Cloudflare _headers allows one "*" splat per rule; use :slug placeholders.)
+/game-files/:slug/Build/:name.unityweb
+  Content-Type: application/octet-stream
+  Cache-Control: public, max-age=31536000, immutable
+
+/game-files/:slug/Build/:name.json
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+
+/game-files/*
+  X-Frame-Options: SAMEORIGIN
+
+/sdk/*
+  Cache-Control: public, max-age=3600

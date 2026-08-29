@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b0b1a"/><stop offset="1" stop-color="#101040"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#bg)"/>
+  <g stroke="#2bff6a" stroke-width="3" fill="none" opacity=".8">
+    <path d="M320 120 L40 360"/><path d="M320 120 L600 360"/>
+    <path d="M320 120 L180 360"/><path d="M320 120 L460 360"/><path d="M320 120 L320 360"/>
+    <path d="M250 180 L390 180"/><path d="M200 240 L440 240"/><path d="M130 300 L510 300"/>
+  </g>
+  <rect x="420" y="215" width="40" height="40" fill="#ff2e4d"/>
+  <circle cx="320" cy="300" r="26" fill="#3af0ff"/>
+  <text x="320" y="70" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" font-size="48" fill="#fff" letter-spacing="6">SLOPE</text>
+</svg>

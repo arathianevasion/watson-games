@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>SDK Test</title>
+  <style>
+    body { margin: 0; height: 100vh; display: grid; place-items: center; background: #111; color: #eee; font-family: system-ui, sans-serif; }
+    .card { text-align: center; }
+    button { font-size: 1.2rem; padding: .75rem 1.5rem; margin: .5rem; cursor: pointer; }
+    #log { font-family: monospace; font-size: .85rem; color: #9f9; white-space: pre-line; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Portal SDK test</h1>
+    <p id="who">waiting for init…</p>
+    <button id="report">Report random score</button>
+    <button id="final">Report FINAL score</button>
+    <div id="log"></div>
+  </div>
+  <script src="/sdk/portal-sdk.js"></script>
+  <script>
+    var log = function (s) { document.getElementById("log").textContent += s + "\n"; };
+    WatsonGames.onInit(function (info) {
+      document.getElementById("who").textContent = info.user
+        ? "Signed in as " + info.user.displayName + " (leaderboard " + (info.leaderboard ? "on" : "off") + ")"
+        : "Not signed in";
+    });
+    WatsonGames.onScoreAck(function (ack) { log("ack: " + (ack.ok ? "saved" : "rejected — " + ack.reason)); });
+    document.getElementById("report").onclick = function () {
+      var s = Math.floor(Math.random() * 1000); log("score " + s); WatsonGames.reportScore(s);
+    };
+    document.getElementById("final").onclick = function () {
+      var s = Math.floor(Math.random() * 1000); log("final " + s); WatsonGames.reportScore(s, { final: true });
+    };
+  </script>
+</body>
+</html>
