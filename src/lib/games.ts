@@ -44,6 +44,21 @@ export const games: Game[] = [
     source: "https://github.com/GlobalwideGames/slope",
   },
   {
+    slug: "stack-tower",
+    title: "Stack Tower",
+    description:
+      "Stack the sliding blocks as high as you can. Every miss trims the block — line them up perfectly to keep the tower wide.",
+    controls: [
+      { key: "Click / Tap", action: "Drop the block" },
+    ],
+    thumbnail: "/thumbs/stack-tower.svg",
+    engine: "html5",
+    entry: "/game-files/stack-tower/index.html",
+    aspect: "16:9",
+    leaderboard: { enabled: true, order: "desc", unit: "blocks", min: 1, max: 1000 },
+    source: "https://github.com/saadamirpk/stack-tower-3d",
+  },
+  {
     slug: "_sdk-test",
     title: "SDK Test",
     description: "Tiny test game that exercises the portal score bridge. Not shown on the home page.",

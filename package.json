@@ -13,7 +13,8 @@
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "db:types": "supabase gen types typescript --linked > src/types/database.ts",
-    "db:push": "supabase db push"
+    "db:push": "supabase db push",
+    "build:stack-tower": "cd games-src/stack-tower && npm install --no-audit --no-fund && CI=false npm run build && rm -rf ../../public/game-files/stack-tower && cp -r build ../../public/game-files/stack-tower && rm -f ../../public/game-files/stack-tower/asset-manifest.json"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.20.4",

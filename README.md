@@ -60,6 +60,10 @@ Or deploy from your machine with `pnpm exec wrangler login && pnpm deploy`.
 
    `/games/_sdk-test` is a hidden test page that exercises the bridge end to end.
 
+## Games with source (`games-src/`)
+
+Open-source games we modify keep their source under `games-src/<slug>/` and are built into `public/game-files/<slug>/`, which is committed. Currently: **stack-tower** (CRA + react-three-fiber) — rebuild with `pnpm build:stack-tower` after editing it.
+
 ## How it fits together
 
 - `src/app/games/[slug]/GameFrame.tsx` — iframe + fullscreen + `postMessage` listener; final scores are submitted with `supabase.rpc('submit_score')`.

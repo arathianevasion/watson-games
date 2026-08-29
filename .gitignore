@@ -49,3 +49,7 @@ cloudflare-env.d.ts
 # supabase
 /supabase/.temp/
 /supabase/.branches/
+
+# vendored game sources (built output is committed under public/game-files/)
+/games-src/*/node_modules/
+/games-src/*/build/
