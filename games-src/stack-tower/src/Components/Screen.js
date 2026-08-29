@@ -14,8 +14,8 @@ const Screen = ({ score, startGame }) => {
                     </>
                 ) : (
                     <>
-                        <p className="text--glitch" data-text="Stack Game">
-                            Stack Game
+                        <p className="text--glitch" data-text="Stack Cheese">
+                            Stack Cheese
                         </p>
                         <button onClick={() => startGame()}>START</button>
                     </>

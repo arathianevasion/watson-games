@@ -45,13 +45,13 @@ export const games: Game[] = [
   },
   {
     slug: "stack-tower",
-    title: "Stack Tower",
+    title: "Stack Cheese",
     description:
-      "Stack the sliding blocks as high as you can. Every miss trims the block — line them up perfectly to keep the tower wide.",
+      "Stack sliding blocks of Swiss cheese as high as you can. Every miss trims the block — line them up perfectly to keep the tower wide.",
     controls: [
-      { key: "Click / Tap", action: "Drop the block" },
+      { key: "Click / Tap", action: "Drop the cheese" },
     ],
-    thumbnail: "/thumbs/stack-tower.svg",
+    thumbnail: "/thumbs/stack-cheese.svg",
     engine: "html5",
     entry: "/game-files/stack-tower/index.html",
     aspect: "16:9",

@@ -1,4 +1,4 @@
-# Stack Tower (source)
+# Stack Cheese (source)
 
 Vendored from https://github.com/saadamirpk/stack-tower-3d (React + react-three-fiber + cannon).
 Modified to report the final score to the portal via `/sdk/portal-sdk.js` (see `src/App.js`).
