@@ -1,4 +1,5 @@
 import { React, useEffect, useRef } from "react";
+import CheeseMaterial from "./CheeseMaterial";
 import { useFrame } from "@react-three/fiber";
 import { useBox } from "@react-three/cannon";
 
@@ -31,7 +32,7 @@ export default function BoxModel({ box, removeBox }) {
     return (
         <mesh ref={myBox} position={getPosition()}>
             <boxGeometry args={[box.width, 1, box.depth]} />
-            <meshStandardMaterial color={`hsl(${200 + box.y * 4},100%,50%)`} />
+            <CheeseMaterial width={box.width} depth={box.depth} height={box.y} />
         </mesh>
     );
 }

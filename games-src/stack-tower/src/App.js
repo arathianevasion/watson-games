@@ -282,7 +282,7 @@ function App() {
                         rotation={[-0.5, 0, 0]}
                         lookAt={[0, 0, 0]}
                     />
-                    <ambientLight intensity={0.6} />
+                    <ambientLight intensity={0.7} />
                     <directionalLight position={[10, 20, 0]} intensity={0.6} />
                     <Physics>
                         <group

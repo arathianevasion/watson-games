@@ -1,4 +1,5 @@
 import { React, useRef, useEffect, useState } from "react";
+import CheeseMaterial from "./CheeseMaterial";
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 
@@ -89,7 +90,7 @@ export default function BoxModel({
     return (
         <mesh ref={myBox} position={[xpos, height, zpos]}>
             <boxGeometry args={[width, 1, depth]} />
-            <meshStandardMaterial color={`hsl(${200 + height * 4},100%,50%)`} />
+            <CheeseMaterial width={width} depth={depth} height={height} />
         </mesh>
     );
 }
