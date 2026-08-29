@@ -9,7 +9,7 @@ export interface Game {
   controls: { key: string; action: string }[];
   thumbnail: string;
   engine: Engine;
-  /** URL of the game's directory under public/ (trailing slash; Cloudflare serves its index.html). */
+  /** Path to the game's index.html under public/ (explicit so `next dev` can serve it too). */
   entry: string;
   aspect: "16:9" | "4:3" | "fill";
   /** Hidden games are playable by URL but not listed on the home grid. */
@@ -37,7 +37,7 @@ export const games: Game[] = [
     ],
     thumbnail: "/thumbs/slope.svg",
     engine: "unity5",
-    entry: "/game-files/slope/",
+    entry: "/game-files/slope/index.html",
     aspect: "16:9",
     // Slope is a compiled Unity build without source, so it can't report scores yet.
     leaderboard: { enabled: false, order: "desc", unit: "points", min: 0, max: 1_000_000 },
@@ -50,7 +50,7 @@ export const games: Game[] = [
     controls: [{ key: "Click", action: "Report a score" }],
     thumbnail: "/thumbs/slope.svg",
     engine: "html5",
-    entry: "/game-files/_sdk-test/",
+    entry: "/game-files/_sdk-test/index.html",
     aspect: "16:9",
     hidden: true,
     leaderboard: { enabled: true, order: "desc", unit: "points", min: 0, max: 10_000 },
