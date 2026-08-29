@@ -2,7 +2,8 @@
 
 A portal for hosting browser games — vendored open-source builds (e.g. Slope) and HTML5 games we modify — with accounts and per-game leaderboards.
 
-- **Stack:** Next.js 16 (App Router) · React · TypeScript · Tailwind 4 · pnpm
+- **Stack:** Next.js 16 (App Router) · React · TypeScript · pnpm
+- **Design:** the Watson Games design system (Claude Design project `7390aad9…`) — tokens in `src/app/globals.css`, components in `src/components/ds/`
 - **Hosting:** Cloudflare Workers via `@opennextjs/cloudflare` (static assets + SSR)
 - **Auth + data:** Supabase (email magic link / password, Google, Discord; Postgres with RLS)
 
@@ -64,9 +65,20 @@ Or deploy from your machine with `pnpm exec wrangler login && pnpm deploy`.
 
 Open-source games we modify keep their source under `games-src/<slug>/` and are built into `public/game-files/<slug>/`, which is committed. Currently: **stack-tower** (CRA + react-three-fiber) — rebuild with `pnpm build:stack-tower` after editing it.
 
+## Design system
+
+The UI follows the Watson Games design system imported from Claude Design: cool charcoal surfaces, one dusty red accent for actions, steel blue for structure, hairline borders, no gradients or motion. Sentence case everywhere, no emoji, mono numerals for scores.
+
+- `src/app/globals.css` — every token (`--surface-*`, `--text-*`, `--accent-*`, type, spacing, shape) plus base element styles and a few layout classes (`.container`, `.game-grid`, `.two-col`).
+- `src/components/ds/` — `Button`, `LinkButton`, `IconButton`, `Icon` (explicit Lucide map), `Badge`, `Tag`, `Card`, `Input`, `Select`, `Checkbox`, `Radio`, `Switch`, `Tabs`, `ProgressBar`, `Dialog`, `Toast`, `ScoreChip`, `GameCard`.
+- `src/components/site/` — `SiteHeader`, `SiteFooter`, `Wordmark`, `GameGrid`.
+- Screens: `/` (home), `/games` (browse + search), `/games/[slug]` (detail, how to play, leaderboard when accounts are on), `/play/[slug]` (in-play shell: top bar, HUD fed by the score bridge, fullscreen, leave dialog), `/login`, `/account`.
+
+Fonts (Space Grotesk, Rubik, JetBrains Mono) load through `next/font/google` and are exposed as `--font-display`, `--font-body`, `--font-mono`.
+
 ## How it fits together
 
-- `src/app/games/[slug]/GameFrame.tsx` — iframe + fullscreen + `postMessage` listener; final scores are submitted with `supabase.rpc('submit_score')`.
+- `src/app/play/[slug]/PlayShell.tsx` — iframe + HUD + fullscreen + `postMessage` listener; final scores are submitted with `supabase.rpc('submit_score')`.
 - `src/lib/sdk-protocol.ts` ↔ `public/sdk/portal-sdk.js` — the message contract (keep in sync).
 - `src/proxy.ts` — refreshes the Supabase session cookie (Next 16 "proxy", formerly middleware). Skips `/game-files/`, `/sdk/`, `/thumbs/`.
 - `supabase/migrations/20260829000000_init.sql` — schema. Scores can only be written through `submit_score()` (auth required, bounds check, 3 submissions / 10 s). Anti-cheat is best-effort.
